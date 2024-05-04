@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Field Events</title>
+    <style>
+        input {
+            width: 200px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text Field Events</h1>
+    <input type="text" id="myInput" placeholder="Type something..." 
+           onchange="handleChange()" onfocus="handleFocus()" onblur="handleBlur()">
+    <p id="output"></p>
+
+    <script>
+        function handleChange() {
+            const input = document.getElementById("myInput");
+            document.getElementById("output").textContent = `Value changed to: ${input.value}`;
+        }
+
+        function handleFocus() {
+            document.getElementById("output").textContent = "Input field focused!";
+        }
+
+        function handleBlur() {
+            document.getElementById("output").textContent = "Input field blurred!";
+        }
+    </script>
+</body>
+</html>

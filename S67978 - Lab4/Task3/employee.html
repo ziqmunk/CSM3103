@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MMHE East Sdn.Bhd</title>
+</head>
+<body>
+  <script>
+      // Parent object Employee
+      function Employee(name, id, salary) {
+        this.name = name;
+        this.id = id;
+        this.salary = salary;
+      }
+
+      // Child object Manager
+      function Manager(name, id, salary, branch) {
+        Employee.call(this, name, id, salary);
+        this.branch = branch;
+      }
+
+      // Inherit properties from Employee
+      Manager.prototype = Object.create(Employee.prototype);
+      Manager.prototype.constructor = Manager;
+
+      // Create an instance of Manager
+      var manager1 = new Manager("Zamirul Asyraf", 101, 17000, "Pasir Gudang");
+
+      // Display properties
+      document.write("Manager Name: " + manager1.name + "<br>");
+      document.write("Employee ID: " + manager1.id + "<br>");
+      document.write("Salary: " + manager1.salary + "<br>");
+      document.write("Branch: " + manager1.branch + "<br>");
+  </script>
+</body>
+</html>

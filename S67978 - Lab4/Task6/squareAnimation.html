@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animation</title>
+  <style>
+    #container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border: 2px solid black;
+      margin: 20px auto;
+    }
+    .small-square {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="square1" class="small-square"></div>
+    <div id="square2" class="small-square"></div>
+  </div>
+  <button onclick="startAnimation()">Start</button>
+  <button onclick="stopAnimation()">Stop</button>
+
+  <script>
+    let animationInterval;
+
+    function moveSquares() {
+      const container = document.getElementById('container');
+      const squares = container.getElementsByClassName('small-square');
+      
+      for (let square of squares) {
+        const maxX = container.offsetWidth - square.offsetWidth;
+        const maxY = container.offsetHeight - square.offsetHeight;
+        const newX = Math.floor(Math.random() * Math.floor(maxX));
+        const newY = Math.floor(Math.random() * Math.floor(maxY));
+
+        square.style.left = newX + 'px';
+        square.style.top = newY + 'px';
+      }
+    }
+
+    function startAnimation() {
+      moveSquares(); // Move squares immediately upon start
+      animationInterval = setInterval(moveSquares, 1000); // Move squares every second
+    }
+
+    function stopAnimation() {
+      clearInterval(animationInterval); // Stop the animation
+    }
+  </script>
+</body>
+</html>

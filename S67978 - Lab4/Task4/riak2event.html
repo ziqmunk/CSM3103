@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Changes based on on event</title>
+  <style>
+    p{
+      padding: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <p id="para">Move your mouse over me or click me to change my background</p>
+  <script>
+    const paragraph = document.getElementById('para');
+
+    //Onclick, yellow background
+    paragraph.addEventListener('click', function(){
+      this.style.backgroundColor = 'yellow';
+    });
+
+    //ondblclick, blue background
+    paragraph.addEventListener('dblclick', function(){
+      this.style.backgroundColor = 'blue';
+    });
+
+    //Onclick, red background
+    paragraph.addEventListener('mouseover', function(){
+      this.style.background = 'red';
+    });
+
+    //Onclick, green background
+    paragraph.addEventListener('mouseout', function(){
+      this.style.background = 'green';
+    });
+  </script>
+</body>
+</html>

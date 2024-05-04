@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Reversed number</title>
+    <meta charset="utf=8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <script>
+      function reverseNumber(n) {
+          const reversed = parseInt(n.toString().split('').reverse().join(''));
+          return reversed;
+      }
+      const x = 12345;
+      document.write("reversed number is: " + reverseNumber(x));
+    </script>
+  </body>
+</html>
