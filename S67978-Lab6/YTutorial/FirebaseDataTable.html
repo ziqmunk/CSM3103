@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>All Firebase v9.0 Data In Table</title>
+</head>
+<body>
+    <div class="container mt-3">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>Sno</th>
+                    <th>Name</th>
+                    <th>Roll No</th>
+                    <th>Section</th>
+                    <th>Gender</th>
+                </tr>
+            </thead>
+            <tbody id="tbody1"></tbody>
+        </table>
+    </div>
+
+    <script type="module">
+        var stdNo = 0;
+        var tbody = document.getElementById('tbody1');
+
+        function AddItemToTable(name, roll, sec, gen) {
+            let trow = document.createElement("tr");
+            let td1 = document.createElement('td');
+            let td2 = document.createElement('td');
+            let td3 = document.createElement('td');
+            let td4 = document.createElement('td');
+            let td5 = document.createElement('td');
+
+            td1.innerHTML = ++stdNo;
+            td2.innerHTML = name;
+            td3.innerHTML = roll;
+            td4.innerHTML = sec;
+            td5.innerHTML = gen;
+
+            trow.appendChild(td1);
+            trow.appendChild(td2);
+            trow.appendChild(td3);
+            trow.appendChild(td4);
+            trow.appendChild(td5);
+
+            tbody.appendChild(trow);
+        }
+
+        function AddAllItemsToTable(TheStudent) {
+            stdNo = 0;
+            tbody.innerHTML = "";
+            TheStudent.forEach(element => {
+                AddItemToTable(element.NameOfStd, element.RollNo, element.Section, element.Gender);
+            });
+        }
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+        import { getDatabase, ref, get, set, child, update, remove }
+        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyCS_aUieb_GlyhxZ8pbFmxus5YyRbhTKik",
+            authDomain: "csm3103-lab6-ac9e1.firebaseapp.com",
+            databaseURL: "https://csm3103-lab6-ac9e1-default-rtdb.firebaseio.com",
+            projectId: "csm3103-lab6-ac9e1",
+            storageBucket: "csm3103-lab6-ac9e1.appspot.com",
+            messagingSenderId: "227061847746",
+            appId: "1:227061847746:web:56ff81a2250ce8555a8d5b",
+            measurementId: "G-1R5SWM5GRF"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getDatabase();
+
+        function GetAllDataOnce() {
+            const dbRef = ref(db);
+
+            get(child(dbRef, "TheStudent"))
+                .then((snapshot) => {
+                    var students = [];
+
+                    snapshot.forEach(childSnapshot => {
+                        students.push(childSnapshot.val());
+                    });
+                    AddAllItemsToTable(students);
+                })
+                .catch((error) => {
+                    console.error("Error fetching data: ", error);
+                });
+        }
+
+        function GetAllDataRealtime() {
+            const dbRef = ref(db, "TheStudent");
+
+            onValue(dbRef, (snapshot) => {
+                var students = [];
+
+                snapshot.forEach(childSnapshot => {
+                    students.push(childSnapshot.val());
+                });
+                AddAllItemsToTable(students);
+            }, (error) => {
+                console.error("Error fetching data: ", error);
+            });
+        }
+
+        window.onload = GetAllDataRealtime;
+        window.onload = GetAllDataOnce;
+    </script>
+</body>
+</html>

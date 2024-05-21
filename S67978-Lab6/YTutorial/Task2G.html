@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h2>Delete Record</h2>
+        <form id="deleteForm">
+            <div class="row">
+                <h4>Enter ID to Delete</h4>
+                <input type="text" id="inputID" name="id" required>
+                <button type="submit">Delete Data</button>
+            </div>
+        </form>
+
+        <script src="https://www.gstatic.com/firebasejs/8.61/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.61/firebase-database.js"></script>
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+            import { getDatabase, ref, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+          
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+              apiKey: "AIzaSyCS_aUieb_GlyhxZ8pbFmxus5YyRbhTKik",
+              authDomain: "csm3103-lab6-ac9e1.firebaseapp.com",
+              databaseURL: "https://csm3103-lab6-ac9e1-default-rtdb.firebaseio.com",
+              projectId: "csm3103-lab6-ac9e1",
+              storageBucket: "csm3103-lab6-ac9e1.appspot.com",
+              messagingSenderId: "227061847746",
+              appId: "1:227061847746:web:56ff81a2250ce8555a8d5b",
+              measurementId: "G-1R5SWM5GRF"
+            };
+          
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+            const db = getDatabase();
+
+            const form = document.querySelector("#deleteForm");
+
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                const inputID = document.querySelector("#inputID").value;
+
+                remove(ref(db, "people/" + inputID))
+                .then(() => {
+                    alert("Data deleted successfully!");
+                })
+                .catch((error) => {
+                    alert("Error: " + error);
+                });
+            });
+        </script>
+    </body>
+</html>

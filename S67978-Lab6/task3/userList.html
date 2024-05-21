@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FamilyFirst Care - User List</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 15px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    #addUserButton {
+      margin: 20px 0;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #addUserButton:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>FamilyFirst Care - User List</h1>
+  <button id="addUserButton">+ Add New User</button>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Phone Number</th>
+      </tr>
+    </thead>
+    <tbody id="userTableBody">
+      <!-- User data will be appended here -->
+    </tbody>
+  </table>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAdMFLrxTOrOJZem0wDYn3SQDEVC6SumFI",
+      authDomain: "firelab6.firebaseapp.com",
+      databaseURL: "https://firelab6-default-rtdb.firebaseio.com",
+      projectId: "firelab6",
+      storageBucket: "firelab6.appspot.com",
+      messagingSenderId: "187059885165",
+      appId: "1:187059885165:web:1b053ffa572ab9539c5b64"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase();
+
+    // Function to fetch and display users
+    function displayUsers() {
+      const dbRef = ref(db);
+      get(child(dbRef, 'carer')).then((snapshot) => {
+        if (snapshot.exists()) {
+          const carers = snapshot.val();
+          const userTableBody = document.getElementById('userTableBody');
+          userTableBody.innerHTML = ''; // Clear the table body
+
+          for (const key in carers) {
+            if (carers.hasOwnProperty(key)) {
+              const user = carers[key];
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                <td>${user.name}</td>
+                <td>${user.address}</td>
+                <td>${user.nophone}</td>
+              `;
+              userTableBody.appendChild(row);
+            }
+          }
+        } else {
+          alert("No data available");
+        }
+      }).catch((error) => {
+        alert("Error: " + error.message);
+      });
+    }
+
+    // Call the function to display users
+    displayUsers();
+
+    // Add event listener to the add user button
+    document.getElementById('addUserButton').addEventListener('click', function() {
+      window.location.href = 'register.html'; // Redirect to the registration page
+    });
+  </script>
+</body>
+</html>

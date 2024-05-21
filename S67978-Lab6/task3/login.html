@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FamilyFirst Care - Login</title>
+</head>
+<body>
+  <h1>FamilyFirst Care</h1>
+  <fieldset>
+    <legend>Carer Login</legend>
+    <form id="loginForm">
+      <table>
+        <tr>
+          <td>
+            <label for="loginName">Name:</label>
+          </td>
+          <td>
+            <input type="text" id="loginName" name="name" required>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="loginPhone">Phone Number:</label>
+          </td>
+          <td>
+            <input type="text" id="loginPhone" name="phone" required>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <button type="submit" id="loginSubmit">Login</button>
+            <button type="reset" id="loginReset">Cancel</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </fieldset>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAdMFLrxTOrOJZem0wDYn3SQDEVC6SumFI",
+      authDomain: "firelab6.firebaseapp.com",
+      databaseURL: "https://firelab6-default-rtdb.firebaseio.com",
+      projectId: "firelab6",
+      storageBucket: "firelab6.appspot.com",
+      messagingSenderId: "187059885165",
+      appId: "1:187059885165:web:1b053ffa572ab9539c5b64"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase();
+
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      var lName = document.querySelector("#loginName").value;
+      var lPhone = document.querySelector("#loginPhone").value;
+
+      const dbRef = ref(db);
+      get(child(dbRef, `carer/${lName}`)).then((snapshot) => {
+        if (snapshot.exists()) {
+          const carerData = snapshot.val();
+          if (carerData.nophone === lPhone) {
+            alert("Login successful!");
+            window.location.href = 'userList.html'; // Redirect to the user list page
+          } else {
+            alert("Phone number does not match our records.");
+          }
+        } else {
+          alert("No carer found with that name.");
+        }
+      }).catch((error) => {
+        alert("Error: " + error.message);
+      });
+    });
+  </script>
+</body>
+</html>

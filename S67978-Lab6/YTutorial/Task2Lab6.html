@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h2>Simple Input</h2>
+        <div class="row">
+            <h4>Enter ID</h4><input type="text" id="inputID">
+            <h4>Enter Name</h4><input type="text" id="inputName">
+            <h4>Enter Age</h4><input type="number" id="inputAge">
+            <button id="btnInsert">Insert Data</button>
+        </div>
+
+        <script src="https://www.gstatic.com/firebasejs/8.61/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.61/firebase-database.js"></script>
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+            import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+          
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+              apiKey: "AIzaSyCS_aUieb_GlyhxZ8pbFmxus5YyRbhTKik",
+              authDomain: "csm3103-lab6-ac9e1.firebaseapp.com",
+              databaseURL: "https://csm3103-lab6-ac9e1-default-rtdb.firebaseio.com",
+              projectId: "csm3103-lab6-ac9e1",
+              storageBucket: "csm3103-lab6-ac9e1.appspot.com",
+              messagingSenderId: "227061847746",
+              appId: "1:227061847746:web:56ff81a2250ce8555a8d5b",
+              measurementId: "G-1R5SWM5GRF"
+            };
+          
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+            const db = getDatabase();
+
+            var inputID = document.querySelector("#inputID");
+            var inputName = document.querySelector("#inputName");
+            var inputAge = document.querySelector("#inputAge");
+
+            var btnInsert = document.querySelector("#btnInsert");
+
+            btnInsert.addEventListener("click", funInsertData);
+
+            function funInsertData() {
+                set(ref(db, "people/" + inputID.value), {
+                    name: inputName.value,
+                    ID: inputID.value,
+                    age: inputAge.value
+                })
+                .then(() => {
+                    alert("Data added successfully!");
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            }
+        </script>
+    </body>
+</html>
