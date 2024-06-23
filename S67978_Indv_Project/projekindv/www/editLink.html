@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/index.css">
+    <title>Edit Link</title>
+</head>
+<body>
+    <div class="header">
+        <h2>Edit Link</h2>
+    </div>
+    <div class="content">
+        <form id="edit-link-form">
+            <label for="edit-link-name">Link Name:</label>
+            <input type="text" id="edit-link-name" name="edit-link-name" required><br>
+
+            <label for="edit-link-url">URL:</label>
+            <input type="url" id="edit-link-url" name="edit-link-url" required><br>
+
+            <label for="edit-link-category">Category:</label>
+            <select id="edit-link-category" name="edit-link-category" required>
+                <!-- Categories will be dynamically populated -->
+            </select><br>
+
+            <label for="edit-link-favourite">
+                <input type="checkbox" id="edit-link-favourite" name="edit-link-favourite">
+                Add to favourites
+            </label><br>
+
+            <button type="submit">Save</button>
+        </form>
+    </div>
+    <script src="js/editLink.js"></script>
+</body>
+</html>
